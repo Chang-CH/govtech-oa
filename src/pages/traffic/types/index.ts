@@ -1,3 +1,6 @@
+/**
+ *Schema for individual camera data
+ */
 export type TrafficItem = {
   timestamp: string;
   camera_id: string;
@@ -14,6 +17,9 @@ export type TrafficItem = {
   };
 };
 
+/**
+ * Schema for traffic API success response
+ */
 export type TrafficResponse = {
   api_info: {
     status: string;
@@ -24,16 +30,25 @@ export type TrafficResponse = {
   }>;
 };
 
+/**
+ * Schema for traffic API success response
+ */
 export type TrafficError = {
   code: number;
   message: string;
 };
 
+/**
+ * Schema for individual weather forecasts
+ */
 export type WeatherItem = {
   area: string;
   forecast: string;
 };
 
+/**
+ * Schema for individual location metaData
+ */
 export type WeatherMetaData = {
   name: string;
   label_location: {
@@ -42,6 +57,9 @@ export type WeatherMetaData = {
   };
 };
 
+/**
+ * Schema for weather API success response
+ */
 export type WeatherResponse = {
   api_info: {
     status: string;
@@ -58,9 +76,15 @@ export type WeatherResponse = {
   }>;
 };
 
+/**
+ * Schema for weather API failure response
+ */
 export type WeatherError = {
   code: number;
   message: string;
 };
 
+/**
+ * Schema for antd table entry
+ */
 export type TableEntry = { key: number; cid: string; location: string; weather: string };

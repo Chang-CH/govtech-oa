@@ -1,6 +1,16 @@
 import { API_V1_TRAFFIC_IMAGES, API_V1_WEATHER } from '../constants';
 import { TableEntry, TrafficItem, TrafficResponse, WeatherItem, WeatherMetaData, WeatherResponse } from '../types';
 
+/**
+ * API fetch method for traffic cameras
+ *
+ * @param setResult callback function to receive formatted results
+ * @param date YYYY-MM-DD date to query for data
+ * @param time HH:mm:ss time to query for data
+ * @param onSuccess callback function to trigger on success
+ * @param onFailure callback function to trigger on failure
+ * @returns Promise for the API fetch
+ */
 export const getTraffic = (
   setResult: (result: Array<TrafficItem>) => void,
   date: string,
@@ -17,6 +27,12 @@ export const getTraffic = (
     .catch((err) => onFailure && onFailure());
 };
 
+/**
+ * Higher order function to produce a mapper function converting traffic and weather data into antd table entries
+ * @param metaArray metadata array to be used for geolocating cameras
+ * @param weatherArray weather array to be joined with camera data
+ * @returns mapper function to map traffic data to antd table data
+ */
 export const mapDataToTable =
   (metaArray: Array<WeatherMetaData>, weatherArray: Array<WeatherItem>) => (item: TrafficItem, key: number) => {
     let area = 'unknown';
@@ -54,6 +70,16 @@ export const mapDataToTable =
     };
   };
 
+/**
+ * API fetch method for weather data
+ *
+ * @param setResult callback function to receive formatted results
+ * @param date YYYY-MM-DD date to query for data
+ * @param time HH:mm:ss time to query for data
+ * @param onSuccess callback function to trigger on success
+ * @param onFailure callback function to trigger on failure
+ * @returns Promise for the API fetch
+ */
 export const getWeather = (
   setResult: (weather: Array<WeatherItem>, meta: Array<WeatherMetaData>) => void,
   date: string,
