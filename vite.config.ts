@@ -46,6 +46,9 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
       minify: 'esbuild',
       rollupOptions: {
         treeshake: 'recommended',
+        // output: {
+        //   manualChunks: { antd: ['antd'] },
+        // },
       },
     },
     css: {
