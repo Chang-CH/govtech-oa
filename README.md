@@ -40,8 +40,8 @@ we also know the weather at the location at the point in time. To compensate for
 
 ## Design considerations
 
-1. Displaying weather all in one: In this app, weather data is joined with camera data. I feel that it allows users to instantly see weather data immediately without having to click on a table entry, which might feel cumbersome. Since the returned dataset is not too big (~90 camera entries, ~50 weather), joining with a simple for loop should not be too computationally intensive, especially since date and time cannot be changed so fast. We can optimize this in the future by creating a hashmap from location to weather in the future for O(n) access.
-2. Filters for camera and location: The most likely use case for this app is likely for a person to view the cameras (or weather) near their location. Filters would help with that. Location filter is regenerated from each query, as opposed to being hardcoded as a constant. This is done so that in the even location data changes in the future, the filter would still work. If performance becomes an issue we can update location filters only once on startup.
+1. Displaying weather all in one: In this app, weather data is joined with camera data. This will improve UX since users can see weather data immediately. Since the returned dataset is not too big (~90 camera entries, ~50 weather), performance trade off is justifiable.
+2. Filters for camera and location: The most likely use case for this app is likely for a person to view the cameras (or weather) near their location. Filters would help with that.
 3. Pagination: Since the returned data is very long, it makes sense to paginate. default page size is kept to 5 since most locations do not have more than 5 cameras anyway.
 4. Handling load state: since we need to query multiple APIs, using an enum to represent fetch status is not good enough. For example, we get `api1` and `api2`, if `api1` returns and sets loading state to true when `api2` has yet to return we are incorrectly setting load states. To handle this we use a number to represent the number of APIs we are waiting for instead.
 

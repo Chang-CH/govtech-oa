@@ -24,14 +24,9 @@ function App() {
   const [date, setDate] = useState<string>('');
   const [time, setTime] = useState<string>('');
   const [traffic, setTraffic] = useState<Array<TrafficItem>>([]);
-  const [weather, setWeather] = useState<Array<WeatherItem>>([]);
-  const [areaData, setAreaData] = useState<Array<WeatherMetaData>>([]);
-  const [locations, setLocations] = useState<
-    Array<{
-      text: string;
-      value: string;
-    }>
-  >([]);
+  const [weather, setWeather] = useState<{ [key: string]: { forecast: string; latitude: number; longitude: number } }>(
+    {},
+  );
   // Result visualisation states
   const [image, setImage] = useState<string>('');
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -85,20 +80,7 @@ function App() {
 
     // We trigger 2 APIs, so increment waiting by 2.
     setWaiting((count) => count + 2);
-    getWeather(
-      (weather: Array<WeatherItem>, data: Array<WeatherMetaData>) => {
-        setWeather(weather);
-        setAreaData(data);
-        // set location filter
-        const locationSet = new Set<string>();
-        data.forEach((entry) => locationSet.add(entry.name));
-        setLocations(Array.from(locationSet).map((location: string) => ({ text: location, value: location })));
-      },
-      dateString,
-      timeString,
-      onSuccess,
-      onFailure,
-    );
+    getWeather(setWeather, dateString, timeString, onSuccess, onFailure);
     getTraffic(setTraffic, dateString, timeString, onSuccess, onFailure);
   };
 
@@ -144,9 +126,9 @@ function App() {
           />
         </Space>
         <Table
-          dataSource={traffic.map(mapDataToTable(areaData, weather))}
+          dataSource={traffic.map(mapDataToTable(weather))}
           columns={
-            width <= MOBILE_WIDTH ? getTrafficTableColumns(locations).slice(1, 3) : getTrafficTableColumns(locations)
+            width <= MOBILE_WIDTH ? getTrafficTableColumns(weather).slice(1, 3) : getTrafficTableColumns(weather)
           }
           rowSelection={{
             type: 'radio',

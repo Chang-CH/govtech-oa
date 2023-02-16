@@ -37,30 +37,22 @@ export const getTraffic = (
  * @returns mapper function to map traffic data to antd table data
  */
 export const mapDataToTable =
-  (metaArray: Array<WeatherMetaData>, weatherArray: Array<WeatherItem>) => (item: TrafficItem, key: number) => {
+  (weatherData: { [key: string]: { forecast: string; latitude: number; longitude: number } }) =>
+  (item: TrafficItem, key: number) => {
     let area = 'unknown';
     let weather = 'unknown';
     let distance = Infinity;
 
     // if item has location data, try to reverse latlong by euclidean distance
     if (item?.location) {
-      for (const metaData of metaArray) {
+      for (const [name, data] of Object.entries(weatherData)) {
         const tempDistance =
-          Math.abs(item?.location?.latitude - metaData.label_location.latitude) +
-          Math.abs(item?.location?.longitude - metaData.label_location.longitude);
-
+          Math.abs(parseFloat(item?.location?.latitude) - data.latitude) +
+          Math.abs(parseFloat(item?.location?.longitude) - data.longitude);
         if (tempDistance < distance) {
           distance = tempDistance;
-          area = metaData.name;
-        }
-      }
-    }
-
-    // If valid location is found, find corresponding weather
-    if (area != 'unknown') {
-      for (const weatherInfo of weatherArray) {
-        if (weatherInfo?.area === area) {
-          weather = weatherInfo?.forecast ?? 'unknown';
+          area = name;
+          weather = data.forecast;
         }
       }
     }
@@ -73,6 +65,37 @@ export const mapDataToTable =
     };
   };
 
+const processWeather = (
+  result: WeatherResponse,
+): { [key: string]: { forecast: string; latitude: number; longitude: number } } => {
+  const res: { [key: string]: { forecast: string; latitude: number; longitude: number } } = {};
+
+  // create hashmap of data from weather
+  result?.items?.[0]?.forecasts?.forEach((item) => {
+    if (item.area in res) {
+      res[item.area].forecast = item.forecast;
+      return;
+    }
+    res[item.area] = { forecast: item.forecast, latitude: 0, longitude: 0 };
+  });
+
+  // create hashmap of data from metadata
+  result?.area_metadata?.forEach((item) => {
+    if (item.name in res) {
+      res[item.name].latitude = item?.label_location?.latitude;
+      res[item.name].longitude = item?.label_location?.longitude;
+      return;
+    }
+    res[item.name] = {
+      forecast: 'unknown',
+      latitude: item?.label_location?.latitude,
+      longitude: item?.label_location?.longitude,
+    };
+  });
+
+  return res;
+};
+
 /**
  * API fetch method for weather data
  *
@@ -84,7 +107,7 @@ export const mapDataToTable =
  * @returns Promise for the API fetch
  */
 export const getWeather = (
-  setResult: (weather: Array<WeatherItem>, meta: Array<WeatherMetaData>) => void,
+  setResult: (weather: { [key: string]: { forecast: string; latitude: number; longitude: number } }) => void,
   date: string,
   time?: string,
   onSuccess?: () => void,
@@ -94,7 +117,7 @@ export const getWeather = (
     return fetch(`${API_V1_WEATHER}?date=${date}`)
       .then((response: any) => response.json())
       .then((result: WeatherResponse) => {
-        setResult(result?.items?.[0]?.forecasts ?? [], result?.area_metadata ?? []);
+        setResult(processWeather(result));
         onSuccess && onSuccess();
       })
       .catch((err) => onFailure && onFailure());
@@ -103,7 +126,7 @@ export const getWeather = (
   return fetch(`${API_V1_WEATHER}?date_time=${date}T${time}`)
     .then((response: any) => response.json())
     .then((result: WeatherResponse) => {
-      setResult(result?.items?.[0]?.forecasts ?? [], result?.area_metadata ?? []);
+      setResult(processWeather(result));
       onSuccess && onSuccess();
     })
     .catch((err) => onFailure && onFailure());
@@ -114,7 +137,9 @@ export const getWeather = (
  * @param locations array of location sot populate the filter UI
  * @returns antd table config
  */
-export const getTrafficTableColumns = (locations: Array<{ text: string; value: string }>) => [
+export const getTrafficTableColumns = (weather: {
+  [key: string]: { forecast: string; latitude: number; longitude: number };
+}) => [
   {
     title: 'Camera',
     dataIndex: 'cid',
@@ -127,7 +152,7 @@ export const getTrafficTableColumns = (locations: Array<{ text: string; value: s
     title: 'Location',
     dataIndex: 'location',
     key: 'location',
-    filters: locations,
+    filters: Object.keys(weather).map((key: string) => ({ text: key, value: key })),
     filterSearch: true,
     onFilter: (value: string | number | boolean, record: TableEntry) => {
       if (typeof value !== 'string') {
