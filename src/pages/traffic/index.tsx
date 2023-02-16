@@ -1,14 +1,14 @@
 import { DatePicker, Image, Space, Table, TimePicker } from 'antd';
-import { useState } from 'react';
+import * as dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 import PageLayout from '_components/PageLayout';
 import { trafficTableColumns } from './constants';
 import { TrafficItem, WeatherItem, WeatherMetaData } from './types';
 import { getTraffic, getWeather, mapDataToTable, STATUS } from './utils';
 
 function App() {
-  // TODO: consider useRef
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
+  const [date, setDate] = useState<string>('');
+  const [time, setTime] = useState<string>('');
 
   const [status, setStaus] = useState(STATUS.SUCCESS);
   const [traffic, setTraffic] = useState<Array<TrafficItem>>([]);
@@ -31,6 +31,10 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    queryTraffic(dayjs().format('YYYY-MM-DD'), dayjs().format('HH:mm:ss'));
+  }, []);
+
   return (
     <PageLayout>
       <Space style={{ marginBottom: '1ch' }}>
@@ -39,12 +43,17 @@ function App() {
             setDate(dateString);
             queryTraffic(dateString, time);
           }}
+          disabledDate={(current) => {
+            return dayjs() < current;
+          }}
+          defaultValue={dayjs()}
         />
         <TimePicker
           onChange={(_date, timeString) => {
-            setDate(timeString);
+            setTime(timeString);
             queryTraffic(date, timeString);
           }}
+          defaultValue={dayjs()}
         />
       </Space>
       <Table

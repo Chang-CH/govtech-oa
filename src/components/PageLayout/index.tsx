@@ -15,7 +15,6 @@ const PageLayout = ({ children }: PageProps) => {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            // justifyContent: 'center',
             alignItems: 'center',
           }}
         >
