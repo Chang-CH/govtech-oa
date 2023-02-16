@@ -20,21 +20,21 @@ rootElement.className = global.root;
 
 const _root = ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-      <Router>
-        <Routes>
-          {/* * is the 404 page */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-          <>
-            <Route
-              path="/"
-              element={
-                <Suspense fallback={<Spin size="large" />}>
-                  <Traffic />
-                </Suspense>
-              }
-            />
-          </>
-        </Routes>
-      </Router>
+    <Router>
+      <Routes>
+        {/* * is the 404 page */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+        <>
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<Spin size="large" />}>
+                <Traffic />
+              </Suspense>
+            }
+          />
+        </>
+      </Routes>
+    </Router>
   </React.StrictMode>,
 );

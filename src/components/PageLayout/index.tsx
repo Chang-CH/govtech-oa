@@ -1,12 +1,20 @@
+/* Components */
 import { Layout } from 'antd';
+
+/* Assets */
 import { ReactComponent as Logo } from '_assets/l2dark.svg';
 
+/* Styles */
 import styles from './s.module.scss';
-
-const { Header, Content } = Layout;
 
 type PageProps = { children: React.ReactNode };
 
+// Ant design recommended layout init
+const { Header, Content } = Layout;
+
+/**
+ * Layout wrapper component for reusable layout
+ */
 const PageLayout = ({ children }: PageProps) => {
   return (
     <div className={styles.root}>
