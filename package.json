@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .ts,.tsx,.md,.mdx && prettier --write src/**/*.tsx src/**/*.ts",
+    "lint": "eslint . --ext .ts,.tsx,.md && prettier --write src/**/*.tsx src/**/*.ts",
     "prepare": "husky install"
   },
   "pnpm": {
@@ -21,6 +21,7 @@
     "antd": "^5.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "vite-plugin-svgr": "^2.4.0",
     "vite-tsconfig-paths": "^4.0.5"
   },
   "devDependencies": {

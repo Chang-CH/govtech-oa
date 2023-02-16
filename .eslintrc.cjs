@@ -15,8 +15,8 @@ module.exports = {
     },
     ecmaVersion: 'latest',
     sourceType: 'module',
-            project: './tsconfig.json',
-        tsconfigRootDir: './',
+    project: './tsconfig.json',
+    tsconfigRootDir: './',
   },
   settings: {
     react: {
