@@ -1,5 +1,5 @@
 import { API_V1_TRAFFIC_IMAGES, API_V1_WEATHER } from '../constants';
-import { TrafficItem, TrafficResponse, WeatherItem, WeatherMetaData, WeatherResponse } from '../types';
+import { TableEntry, TrafficItem, TrafficResponse, WeatherItem, WeatherMetaData, WeatherResponse } from '../types';
 
 export const getTraffic = (
   setResult: (result: Array<TrafficItem>) => void,
@@ -80,8 +80,27 @@ export const getWeather = (
     .catch((err) => onFailure && onFailure());
 };
 
-export enum STATUS {
-  LOADING,
-  SUCCESS,
-  FAILURE,
-}
+/**
+ * Gets the table schema given a location array
+ * @param locations array of location sot populate the filter UI
+ * @returns antd table config
+ */
+export const getTrafficTableColumns = (locations: Array<{ text: string; value: string }>) => [
+  {
+    title: 'Camera',
+    dataIndex: 'cid',
+    key: 'cid',
+    sorter: (a: TableEntry, b: TableEntry) => {
+      return parseInt(a.cid) - parseInt(b.cid);
+    },
+  },
+  {
+    title: 'Location',
+    dataIndex: 'location',
+    key: 'location',
+    filters: locations,
+    filterSearch: true,
+    onFilter: (value: string, record: TableEntry) => record.location.startsWith(value),
+  },
+  { title: 'Weather', dataIndex: 'weather', key: 'weather' },
+];

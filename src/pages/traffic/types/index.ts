@@ -1,7 +1,7 @@
 export type TrafficItem = {
   timestamp: string;
-  camera_id: number;
-  image_id: number;
+  camera_id: string;
+  image_id: string;
   image: string;
   image_metadata: {
     height: number;

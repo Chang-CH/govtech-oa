@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import PageLayout from '_components/PageLayout';
 import { trafficTableColumns } from './constants';
 import { TrafficItem, WeatherItem, WeatherMetaData } from './types';
-import { getTraffic, getWeather, mapDataToTable, STATUS } from './utils';
+import { getTraffic, getTrafficTableColumns, getWeather, mapDataToTable, STATUS } from './utils';
 
 function App() {
   /* States */
@@ -17,6 +17,12 @@ function App() {
   const [traffic, setTraffic] = useState<Array<TrafficItem>>([]);
   const [weather, setWeather] = useState<Array<WeatherItem>>([]);
   const [areaData, setAreaData] = useState<Array<WeatherMetaData>>([]);
+  const [locations, setLocations] = useState<
+    Array<{
+      text: string;
+      value: string;
+    }>
+  >([]);
   const [image, setImage] = useState<string>('');
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
@@ -61,6 +67,10 @@ function App() {
         (weather: Array<WeatherItem>, data: Array<WeatherMetaData>) => {
           setWeather(weather);
           setAreaData(data);
+          // set location filter
+          const locationSet = new Set<string>();
+          data.forEach((entry) => locationSet.add(entry.name));
+          setLocations(Array.from(locationSet).map((location: string) => ({ text: location, value: location })));
         },
         dateString,
         timeString,
@@ -69,10 +79,6 @@ function App() {
       );
       getTraffic(setTraffic, dateString, timeString, onSuccess, onFailure);
     }
-  };
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
   };
 
   const onResize = () => setWidth(window.innerWidth);
@@ -114,7 +120,7 @@ function App() {
         </Space>
         <Table
           dataSource={traffic.map(mapDataToTable(areaData, weather))}
-          columns={width <= 768 ? trafficTableColumns.slice(0, 2) : trafficTableColumns}
+          columns={width <= 768 ? getTrafficTableColumns(locations).slice(1, 3) : getTrafficTableColumns(locations)}
           rowSelection={{
             type: 'radio',
             selectedRowKeys,
