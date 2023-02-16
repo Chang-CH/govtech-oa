@@ -43,6 +43,7 @@ we also know the weather at the location at the point in time. To compensate for
 1. Displaying weather all in one: In this app, weather data is joined with camera data. I feel that it allows users to instantly see weather data immediately without having to click on a table entry, which might feel cumbersome. Since the returned dataset is not too big (~90 camera entries, ~50 weather), joining with a simple for loop should not be too computationally intensive, especially since date and time cannot be changed so fast. We can optimize this in the future by creating a hashmap from location to weather in the future for O(n) access.
 2. Filters for camera and location: The most likely use case for this app is likely for a person to view the cameras (or weather) near their location. Filters would help with that. Location filter is regenerated from each query, as opposed to being hardcoded as a constant. This is done so that in the even location data changes in the future, the filter would still work. If performance becomes an issue we can update location filters only once on startup.
 3. Pagination: Since the returned data is very long, it makes sense to paginate. default page size is kept to 5 since most locations do not have more than 5 cameras anyway.
+4. Handling load state: since we need to query multiple APIs, using an enum to represent fetch status is not good enough. For example, we get `api1` and `api2`, if `api1` returns and sets loading state to true when `api2` has yet to return we are incorrectly setting load states. To handle this we use a number to represent the number of APIs we are waiting for instead.
 
 ## Project setup
 
@@ -50,5 +51,13 @@ we also know the weather at the location at the point in time. To compensate for
 - Code splitting: the `/traffic` page is lazily imported to allow bundle sizes to be kept small, only importing resources of pages we need. while this app is only a single page at the moment, as more pages get added in the future this will gain importance.
 - minify: we use `build.minify` to compress file sizes produced by vite
 - uglify: CSS class names are uglified to shorten the names as well as hide internal class names from clients. Class names are a combination of file path, file name, class name and hash in development build to identify problematic css.
--  
+- autoprefixer: autoprefixer is added to translate modern css syntax into legacy compatible syntax with vendor prefixes (-webkit-*) where applicable to try and improve backwards compatibility
 
+## Tech stack
+
+1. React: I have the most experience with this compared to vue or angular.
+2. Vite (+pnpm): essentially a more performant webpack. Decreases build times by a lot, and has hot module replacement configured out the box.
+3. Ant design: UI framework. While ant lacks the expressiveness of other libraries like Material or Chakra, I feel that its built in functionalities and overall robustness makes it ideal for this project
+4. Eslint: linter for typescript files
+5. Prettier: code formatter for all files
+6. Husky (+lint staged): pre-commit hooks, runs eslint and prettier on relevant files before commiting.
