@@ -1,4 +1,7 @@
+/** Constants */
 import { API_V1_TRAFFIC_IMAGES, API_V1_WEATHER } from '../constants';
+
+/** Types */
 import { TableEntry, TrafficItem, TrafficResponse, WeatherItem, WeatherMetaData, WeatherResponse } from '../types';
 
 /**
