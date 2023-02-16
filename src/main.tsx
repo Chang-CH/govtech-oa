@@ -1,10 +1,40 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
+import React, { Suspense } from 'react';
+import ReactDOM from 'react-dom/client';
+import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+/** Styles */
+import './index.css';
+import global from '_styles/global.module.scss';
+import { Spin } from 'antd';
+
+/** Lazy imported pages */
+const Traffic = React.lazy(() => import('./pages/traffic'));
+
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+  throw new Error('Failed to find root. null received as root element.');
+}
+
+rootElement.className = global.root;
+
+const _root = ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <App />
+      <Router>
+        <Routes>
+          {/* * is the 404 page */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+          <>
+            <Route
+              path="/"
+              element={
+                <Suspense fallback={<Spin size="large" />}>
+                  <Traffic />
+                </Suspense>
+              }
+            />
+          </>
+        </Routes>
+      </Router>
   </React.StrictMode>,
-)
+);
