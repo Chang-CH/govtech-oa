@@ -12,14 +12,15 @@ function App() {
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [date, setDate] = useState<string>('');
   const [time, setTime] = useState<string>('');
-  // API load state
+  // API load state. We use a number so if multiple api calls are made load state does not change to success on first API return
   const [waiting, setWaiting] = useState(0);
   const [traffic, setTraffic] = useState<Array<TrafficItem>>([]);
   const [weather, setWeather] = useState<Array<WeatherItem>>([]);
   const [areaData, setAreaData] = useState<Array<WeatherMetaData>>([]);
   const [image, setImage] = useState<string>('');
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
-  /* Notification */
+  /* Antd notification */
   const [messageApi, contextHolder] = message.useMessage();
 
   const onSuccess = () => {
@@ -53,6 +54,8 @@ function App() {
         type: 'loading',
         content: 'fetching data...',
       });
+      setSelectedRowKeys([]);
+      setImage('');
       setWaiting((count) => count + 2);
       getWeather(
         (weather: Array<WeatherItem>, data: Array<WeatherMetaData>) => {
@@ -66,6 +69,10 @@ function App() {
       );
       getTraffic(setTraffic, dateString, timeString, onSuccess, onFailure);
     }
+  };
+
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+    setSelectedRowKeys(newSelectedRowKeys);
   };
 
   const onResize = () => setWidth(window.innerWidth);
@@ -110,8 +117,10 @@ function App() {
           columns={width <= 768 ? trafficTableColumns.slice(0, 2) : trafficTableColumns}
           rowSelection={{
             type: 'radio',
+            selectedRowKeys,
             onSelect: (record) => {
               setImage(traffic?.[record.key]?.image);
+              setSelectedRowKeys([record.key]);
             },
           }}
           pagination={{
