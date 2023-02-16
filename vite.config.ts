@@ -4,6 +4,7 @@ import svgr from 'vite-plugin-svgr';
 import path from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import autoprefixer from 'autoprefixer';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 const commons = {
   resolve: {
@@ -40,7 +41,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
 
   return {
     ...commons,
-    plugins: [react(), svgr()],
+    plugins: [react(), svgr(), visualizer()],
     build: {
       minify: 'esbuild',
       rollupOptions: {

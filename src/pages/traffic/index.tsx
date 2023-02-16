@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 
 /** Components */
-import { DatePicker, Image, message, Space, Table, TimePicker } from 'antd';
 import dayjs from 'dayjs';
 import PageLayout from '_components/PageLayout';
 
@@ -12,6 +11,7 @@ import { TrafficItem } from './types';
 /** Util functions */
 import { getTraffic, getTrafficTableColumns, getWeather, mapDataToTable } from './utils';
 import { FALLBACK_IMAGE, MOBILE_WIDTH } from '_constants/general';
+import { DatePicker, Image, message, Space, Table, TimePicker } from 'antd';
 
 /** Traffic page main component */
 function App() {
