@@ -1,0 +1,12 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+    "javascript"
+  ],
+  "prettier.configPath": ".prettierrc.cjs",
+  "eslint.options": {
+    "overrideConfigFile": ".eslintrc.cjs"
+  },
+ }
