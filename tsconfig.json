@@ -19,6 +19,7 @@
     "paths": {
       " _assets/*": [ "src/assets/*"],
       "_constants/*": [ "src/constants/*"],
+      "_styles/*": [ "src/styles/*"],
       "_components/*": [ "src/components/*"],
     }
   },
