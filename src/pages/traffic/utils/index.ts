@@ -2,19 +2,19 @@ import { API_V1_TRAFFIC_IMAGES, API_V1_WEATHER } from '../constants';
 import { TrafficItem, TrafficResponse, WeatherItem, WeatherMetaData, WeatherResponse } from '../types';
 
 export const getTraffic = (
-  setStatus: (status: STATUS) => void,
   setResult: (result: Array<TrafficItem>) => void,
   date: string,
   time: string,
+  onSuccess?: () => void,
+  onFailure?: () => void,
 ) => {
-  setStatus(STATUS.LOADING);
   return fetch(`${API_V1_TRAFFIC_IMAGES}?date_time=${date}T${time}`)
     .then((response: any) => response.json())
     .then((result: TrafficResponse) => {
-      setStatus(STATUS.SUCCESS);
       setResult(result?.items?.[0]?.cameras ?? []);
+      onSuccess && onSuccess();
     })
-    .catch((err) => setStatus(STATUS.FAILURE));
+    .catch((err) => onFailure && onFailure());
 };
 
 export const mapDataToTable =
@@ -55,29 +55,29 @@ export const mapDataToTable =
   };
 
 export const getWeather = (
-  setStatus: (status: STATUS) => void,
   setResult: (weather: Array<WeatherItem>, meta: Array<WeatherMetaData>) => void,
   date: string,
   time?: string,
+  onSuccess?: () => void,
+  onFailure?: () => void,
 ) => {
-  setStatus(STATUS.LOADING);
   if (!time) {
     return fetch(`${API_V1_WEATHER}?date=${date}`)
       .then((response: any) => response.json())
       .then((result: WeatherResponse) => {
-        setStatus(STATUS.SUCCESS);
         setResult(result?.items?.[0]?.forecasts ?? [], result?.area_metadata ?? []);
+        onSuccess && onSuccess();
       })
-      .catch((err) => setStatus(STATUS.FAILURE));
+      .catch((err) => onFailure && onFailure());
   }
 
   return fetch(`${API_V1_WEATHER}?date_time=${date}T${time}`)
     .then((response: any) => response.json())
     .then((result: WeatherResponse) => {
-      setStatus(STATUS.SUCCESS);
       setResult(result?.items?.[0]?.forecasts ?? [], result?.area_metadata ?? []);
+      onSuccess && onSuccess();
     })
-    .catch((err) => setStatus(STATUS.FAILURE));
+    .catch((err) => onFailure && onFailure());
 };
 
 export enum STATUS {
