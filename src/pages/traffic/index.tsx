@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 /** Components */
 import { DatePicker, Image, message, Space, Table, TimePicker } from 'antd';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import PageLayout from '_components/PageLayout';
 
 /** Types */
