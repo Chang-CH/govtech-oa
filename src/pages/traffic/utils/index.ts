@@ -53,6 +53,7 @@ export const mapDataToTable =
       weather: weather,
     };
   };
+
 export const getWeather = (
   setStatus: (status: STATUS) => void,
   setResult: (weather: Array<WeatherItem>, meta: Array<WeatherMetaData>) => void,
@@ -64,7 +65,7 @@ export const getWeather = (
     return fetch(`${API_V1_WEATHER}?date=${date}`)
       .then((response: any) => response.json())
       .then((result: WeatherResponse) => {
-        console.log(result);
+        setStatus(STATUS.SUCCESS);
         setResult(result?.items?.[0]?.forecasts ?? [], result?.area_metadata ?? []);
       })
       .catch((err) => setStatus(STATUS.FAILURE));

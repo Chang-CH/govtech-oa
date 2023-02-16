@@ -62,3 +62,5 @@ export type WeatherError = {
   code: number;
   message: string;
 };
+
+export type TableEntry = { key: number; cid: string; location: string; weather: string };
