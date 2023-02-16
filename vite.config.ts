@@ -3,12 +3,13 @@ import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import path from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import autoprefixer from 'autoprefixer';
 
 const commons = {
   resolve: {
     alias: {
       _assets: path.resolve(__dirname, 'src/assets/'),
-      _styles: path.resolve(__dirname, 'src/styles/'),
+      _constants: path.resolve(__dirname, 'src/constants/'),
       _components: path.resolve(__dirname, 'src/components/'),
     },
     extensions: ['.ts', '.tsx', '.js'],
@@ -21,6 +22,11 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
     return {
       plugins: [react(), svgr(), tsconfigPaths()],
       css: {
+        postcss: {
+          plugins: [
+            autoprefixer({}), // add options if needed
+          ],
+        },
         modules: {
           // similar to localIdentName of webpack, gives us more info to debug css
           generateScopedName: '[path][name]__[local]--[hash:base64:5]',
@@ -41,6 +47,11 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
       },
     },
     css: {
+      postcss: {
+        plugins: [
+          autoprefixer({}), // add options if needed
+        ],
+      },
       modules: {
         generateScopedName: '[hash:base64:5]',
         localsConvention: 'camelCaseOnly',

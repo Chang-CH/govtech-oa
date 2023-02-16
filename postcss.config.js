@@ -1,8 +1,7 @@
-import autoprefixer from 'autoprefixer'
+import autoprefixer from 'autoprefixer';
+// appends vendor prefixes where necessary e.g. -webkit-
 const config = {
-  plugins: [
-    autoprefixer
-  ]
-}
+  plugins: [autoprefixer],
+};
 
-export default config
+export default config;

@@ -11,7 +11,7 @@ import { TrafficItem, WeatherItem, WeatherMetaData } from './types';
 
 /** Util functions */
 import { getTraffic, getTrafficTableColumns, getWeather, mapDataToTable } from './utils';
-import { FALLBACK_IMAGE, MOBILE_WIDTH } from 'src/constants/general';
+import { FALLBACK_IMAGE, MOBILE_WIDTH } from '_constants/general';
 
 /** Traffic page main component */
 function App() {

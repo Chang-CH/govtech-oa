@@ -4,3 +4,4 @@ dist/
 .eslintrc.cjs
 *.d.ts
 *.md
+postcss.config.js
