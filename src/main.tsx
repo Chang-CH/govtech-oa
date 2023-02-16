@@ -1,9 +1,9 @@
+/** React */
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 /** Styles */
-import './index.css';
 import global from '_styles/global.module.scss';
 import { Spin } from 'antd';
 
