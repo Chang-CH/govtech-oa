@@ -7,5 +7,14 @@
     "prettier --write",
     "eslint"
   ],
+    "*.js": [
+    "prettier --write"
+  ],
+  "*.cjs": [
+    "prettier --write"
+  ],
+  "*.jsx": [
+    "prettier --write"
+  ],
   "*.scss": "prettier --write"
 }

@@ -5,9 +5,19 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking'
   ],
   plugins: ['unused-imports', '@typescript-eslint', 'import'],
   parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true
+    },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+            project: './tsconfig.json',
+        tsconfigRootDir: './',
+  },
   settings: {
     react: {
       version: 'detect',
@@ -40,12 +50,4 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
   },
-  overrides: [
-    {
-      'files': ['*.tsx', '*.ts'],
-      'extends': ['plugin:@typescript-eslint/recommended-requiring-type-checking'],
-      'parser': '@typescript-eslint/parser',
-      
-    },
-  ]
 };

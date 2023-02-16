@@ -8,5 +8,5 @@ export const trafficTableColumns: Array<{
 }> = [
   { title: 'Camera', dataIndex: 'cid', key: 'cid' },
   { title: 'Location', dataIndex: 'location', key: 'location' },
-  { title: 'Timestamp', dataIndex: 'time', key: 'time' },
+  { title: 'Weather', dataIndex: 'weather', key: 'weather' },
 ];

@@ -51,7 +51,7 @@ function App() {
       </Space>
       <Space>
         <Table
-          dataSource={traffic.map(mapDataToTable(areaData))}
+          dataSource={traffic.map(mapDataToTable(areaData, weather))}
           columns={trafficTableColumns}
           rowSelection={{
             type: 'radio',
@@ -60,7 +60,6 @@ function App() {
             },
           }}
         />
-        <div>{weather?.[0]?.area}</div>
       </Space>
       <Image src={image} />
     </PageLayout>
