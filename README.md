@@ -6,7 +6,7 @@ Submission for *Financial Planning Digital Service – Technical Take-Home Asses
 
 ### Installation
 
-1. Make sure you have the latest version of [nodeJs](https://nodejs.org/en/). This project was built on version `v16.13.1`.
+1. Make sure you have [nodeJs](https://nodejs.org/en/) installed. This project was built on version `v16.13.1`.
 2. Install [pnpm](https://pnpm.io/installation).
    - For windows, powershell: `iwr https://get.pnpm.io/install.ps1 -useb | iex`
    - For POSIX systems: `wget -qO- https://get.pnpm.io/install.sh | sh -` or `curl -fsSL https://get.pnpm.io/install.sh | sh -`
