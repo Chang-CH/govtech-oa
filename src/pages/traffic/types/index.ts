@@ -34,11 +34,19 @@ export type WeatherItem = {
   forecast: string;
 };
 
+export type WeatherMetaData = {
+  name: string;
+  label_location: {
+    latitude: number;
+    longitude: number;
+  };
+};
+
 export type WeatherResponse = {
   api_info: {
     status: string;
   };
-  area_metadata: any;
+  area_metadata: Array<WeatherMetaData>;
   items: Array<{
     update_timestamp: string;
     timestamp: string;

@@ -1,5 +1,5 @@
 import { API_V1_TRAFFIC_IMAGES, API_V1_WEATHER } from '../constants';
-import { TrafficItem, TrafficResponse, WeatherItem, WeatherResponse } from '../types';
+import { TrafficItem, TrafficResponse, WeatherItem, WeatherMetaData, WeatherResponse } from '../types';
 
 export const getTraffic = (
   setStatus: (status: STATUS) => void,
@@ -17,17 +17,33 @@ export const getTraffic = (
     .catch((err) => setStatus(STATUS.FAILURE));
 };
 
-export const mapTrafficToTable = (item: TrafficItem, key: number) => {
+export const mapDataToTable = (weatherArray: Array<WeatherMetaData>) => (item: TrafficItem, key: number) => {
+  let area = 'unknown';
+  let distance = Infinity;
+
+  if (item?.location) {
+    for (const metaData of weatherArray) {
+      const tempDistance =
+        Math.abs(item?.location?.latitude - metaData.label_location.latitude) +
+        Math.abs(item?.location?.longitude - metaData.label_location.longitude);
+
+      if (tempDistance < distance) {
+        distance = tempDistance;
+        area = metaData.name;
+      }
+    }
+  }
+
   return {
     key,
     cid: item.camera_id,
-    location: `${item.location?.latitude}, ${item.location?.longitude}`,
+    location: area,
     time: item.timestamp,
   };
 };
 export const getWeather = (
   setStatus: (status: STATUS) => void,
-  setResult: (result: Array<WeatherItem>) => void,
+  setResult: (weather: Array<WeatherItem>, meta: Array<WeatherMetaData>) => void,
   date: string,
   time?: string,
 ) => {
@@ -36,8 +52,8 @@ export const getWeather = (
     return fetch(`${API_V1_WEATHER}?date=${date}`)
       .then((response: any) => response.json())
       .then((result: WeatherResponse) => {
-        setStatus(STATUS.SUCCESS);
-        setResult(result?.items?.[0]?.forecasts ?? []);
+        console.log(result);
+        setResult(result?.items?.[0]?.forecasts ?? [], result?.area_metadata ?? []);
       })
       .catch((err) => setStatus(STATUS.FAILURE));
   }
@@ -46,7 +62,7 @@ export const getWeather = (
     .then((response: any) => response.json())
     .then((result: WeatherResponse) => {
       setStatus(STATUS.SUCCESS);
-      setResult(result?.items?.[0]?.forecasts ?? []);
+      setResult(result?.items?.[0]?.forecasts ?? [], result?.area_metadata ?? []);
     })
     .catch((err) => setStatus(STATUS.FAILURE));
 };

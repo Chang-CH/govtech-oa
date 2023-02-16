@@ -5,7 +5,6 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:@typescript-eslint/recommended',
-    // 'eslint-config-prettier',
   ],
   plugins: ['unused-imports', '@typescript-eslint', 'import'],
   parser: '@typescript-eslint/parser',
@@ -46,10 +45,7 @@ module.exports = {
       'files': ['*.tsx', '*.ts'],
       'extends': ['plugin:@typescript-eslint/recommended-requiring-type-checking'],
       'parser': '@typescript-eslint/parser',
-      'parserOptions': {
-        'project': './tsconfig.json',
-        'tsconfigRootDir': './',
-      },
+      
     },
   ]
 };

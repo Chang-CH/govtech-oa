@@ -2,9 +2,8 @@ import { DatePicker, Image, Space, Table, TimePicker } from 'antd';
 import { useState } from 'react';
 import PageLayout from '_components/PageLayout';
 import { trafficTableColumns } from './constants';
-import styles from './s.module.scss';
-import { TrafficItem, WeatherItem } from './types';
-import { getTraffic, getWeather, mapTrafficToTable, STATUS } from './utils';
+import { TrafficItem, WeatherItem, WeatherMetaData } from './types';
+import { getTraffic, getWeather, mapDataToTable, STATUS } from './utils';
 
 function App() {
   // TODO: consider useRef
@@ -14,11 +13,20 @@ function App() {
   const [status, setStaus] = useState(STATUS.SUCCESS);
   const [traffic, setTraffic] = useState<Array<TrafficItem>>([]);
   const [weather, setWeather] = useState<Array<WeatherItem>>([]);
+  const [areaData, setAreaData] = useState<Array<WeatherMetaData>>([]);
   const [image, setImage] = useState<string>('');
 
   const queryTraffic = (dateString: string, timeString: string) => {
     if (dateString) {
-      getWeather(setStaus, setWeather, dateString, timeString);
+      getWeather(
+        setStaus,
+        (weather: Array<WeatherItem>, data: Array<WeatherMetaData>) => {
+          setWeather(weather);
+          setAreaData(data);
+        },
+        dateString,
+        timeString,
+      );
       if (timeString) {
         getTraffic(setStaus, setTraffic, dateString, timeString);
       }
@@ -43,7 +51,7 @@ function App() {
       </Space>
       <Space>
         <Table
-          dataSource={traffic.map(mapTrafficToTable)}
+          dataSource={traffic.map(mapDataToTable(areaData))}
           columns={trafficTableColumns}
           rowSelection={{
             type: 'radio',

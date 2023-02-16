@@ -8,6 +8,7 @@
       " _assets/*": [ "./src/assets/*"],
       "_styles/*": [ "./src/styles/*"],
       "_components/*": [ "./src/components/*"],
+      "_markdown/*": [ "./src/markdown/*"],
     }
   },
   "include": ["vite.config.ts"]
