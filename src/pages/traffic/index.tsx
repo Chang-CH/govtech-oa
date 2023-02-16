@@ -132,6 +132,7 @@ function App() {
               return dayjs() < current;
             }}
             defaultValue={dayjs()}
+            allowClear={false}
           />
           <TimePicker
             onChange={(_date, timeString) => {
@@ -139,6 +140,7 @@ function App() {
               queryTraffic(date, timeString, onSuccess, onFailure);
             }}
             defaultValue={dayjs()}
+            allowClear={false}
           />
         </Space>
         <Table
