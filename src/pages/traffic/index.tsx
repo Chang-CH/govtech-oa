@@ -7,6 +7,7 @@ import { TrafficItem, WeatherItem, WeatherMetaData } from './types';
 import { getTraffic, getWeather, mapDataToTable, STATUS } from './utils';
 
 function App() {
+  const [width, setWidth] = useState<number>(window.innerWidth);
   const [date, setDate] = useState<string>('');
   const [time, setTime] = useState<string>('');
 
@@ -31,8 +32,15 @@ function App() {
     }
   };
 
+  const onResize = () => setWidth(window.innerWidth);
+
   useEffect(() => {
+    window.addEventListener('resize', onResize);
     queryTraffic(dayjs().format('YYYY-MM-DD'), dayjs().format('HH:mm:ss'));
+
+    return () => {
+      window.removeEventListener('resize', onResize);
+    };
   }, []);
 
   return (
@@ -58,7 +66,7 @@ function App() {
       </Space>
       <Table
         dataSource={traffic.map(mapDataToTable(areaData, weather))}
-        columns={trafficTableColumns}
+        columns={width <= 768 ? trafficTableColumns.slice(0, 2) : trafficTableColumns}
         rowSelection={{
           type: 'radio',
           onSelect: (record) => {

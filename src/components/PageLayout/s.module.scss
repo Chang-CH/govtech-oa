@@ -8,9 +8,14 @@
   align-items: center;
 }
 
+.layout {
+    max-width: 800px;
+    width: 100%;
+}
+
 .div-content {
-  min-width: 800px;
-  width: 800px;
+  max-width: 800px;
+  width: 100%;
   height: 100%;
   background-color: #00000010;
   justify-content: flex-start;

@@ -10,7 +10,7 @@ type PageProps = { children: React.ReactNode };
 const PageLayout = ({ children }: PageProps) => {
   return (
     <div className={styles.root}>
-      <Layout>
+      <Layout className={styles.layout}>
         <Header
           style={{
             display: 'flex',
