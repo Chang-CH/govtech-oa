@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import PageLayout from '_components/PageLayout';
 
 /** Types */
-import { TrafficItem, WeatherItem, WeatherMetaData } from './types';
+import { TrafficItem } from './types';
 
 /** Util functions */
 import { getTraffic, getTrafficTableColumns, getWeather, mapDataToTable } from './utils';

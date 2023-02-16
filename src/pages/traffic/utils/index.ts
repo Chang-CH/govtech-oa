@@ -2,7 +2,7 @@
 import { API_V1_TRAFFIC_IMAGES, API_V1_WEATHER } from '../constants';
 
 /** Types */
-import { TableEntry, TrafficItem, TrafficResponse, WeatherItem, WeatherMetaData, WeatherResponse } from '../types';
+import { TableEntry, TrafficItem, TrafficResponse, WeatherResponse } from '../types';
 
 /**
  * API fetch method for traffic cameras
@@ -47,8 +47,7 @@ export const mapDataToTable =
     if (item?.location) {
       for (const [name, data] of Object.entries(weatherData)) {
         const tempDistance =
-          Math.abs(parseFloat(item?.location?.latitude) - data.latitude) +
-          Math.abs(parseFloat(item?.location?.longitude) - data.longitude);
+          Math.abs(item?.location?.latitude - data.latitude) + Math.abs(item?.location?.longitude - data.longitude);
         if (tempDistance < distance) {
           distance = tempDistance;
           area = name;
