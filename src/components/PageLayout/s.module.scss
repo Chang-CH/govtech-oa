@@ -1,0 +1,21 @@
+.root {
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.div-content {
+  min-width: 800px;
+  width: 800px;
+  height: 100%;
+  background-color: #00000010;
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
