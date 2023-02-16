@@ -5,8 +5,10 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:@typescript-eslint/recommended',
+    // 'eslint-config-prettier',
   ],
   plugins: ['unused-imports', '@typescript-eslint', 'import'],
+  parser: '@typescript-eslint/parser',
   settings: {
     react: {
       version: 'detect',
@@ -19,8 +21,8 @@ module.exports = {
       },
     },
   },
-  // parser: '@typescript-eslint/parser',
   rules: {
+    // Add your own rules here to override ones from the extended configs.
     'no-unused-vars': 'off',
     'unused-imports/no-unused-imports': 'error',
     'unused-imports/no-unused-vars': [

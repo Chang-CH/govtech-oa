@@ -9,7 +9,9 @@ const PageLayout = ({ children }: PageProps) => {
   return (
     <div className={styles.root}>
       <Layout>
-        <Header></Header>
+        <Header>
+          <p style={{ color: 'red' }}>TODO</p>
+        </Header>
         <Content className={styles.divContent}>{children}</Content>
       </Layout>
     </div>
