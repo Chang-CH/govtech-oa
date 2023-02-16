@@ -129,7 +129,12 @@ export const getTrafficTableColumns = (locations: Array<{ text: string; value: s
     key: 'location',
     filters: locations,
     filterSearch: true,
-    onFilter: (value: string, record: TableEntry) => record.location.startsWith(value),
+    onFilter: (value: string | number | boolean, record: TableEntry) => {
+      if (typeof value !== 'string') {
+        return false;
+      }
+      return record.location.startsWith(value);
+    },
   },
   { title: 'Weather', dataIndex: 'weather', key: 'weather' },
 ];
