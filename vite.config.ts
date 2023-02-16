@@ -19,6 +19,7 @@ const commons = {
 };
 
 // https://vitejs.dev/config/
+// @ts-ignore
 export default defineConfig(({ command, mode, ssrBuild }) => {
   if (command === 'serve') {
     return {

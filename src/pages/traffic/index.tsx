@@ -11,7 +11,7 @@ import { TrafficItem } from './types';
 /** Util functions */
 import { getTraffic, getTrafficTableColumns, getWeather, mapDataToTable } from './utils';
 import { FALLBACK_IMAGE, MOBILE_WIDTH } from '_constants/general';
-import { DatePicker, Image, message, Space, Table, TimePicker } from 'antd';
+import { DatePicker, Image, Space, Table, TimePicker, message } from 'antd';
 
 /** Traffic page main component */
 function App() {

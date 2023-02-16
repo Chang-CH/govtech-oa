@@ -27,7 +27,7 @@ export const getTraffic = (
       setResult(result?.items?.[0]?.cameras ?? []);
       onSuccess && onSuccess();
     })
-    .catch((err) => onFailure && onFailure());
+    .catch((_err) => onFailure && onFailure());
 };
 
 /**
@@ -119,7 +119,7 @@ export const getWeather = (
         setResult(processWeather(result));
         onSuccess && onSuccess();
       })
-      .catch((err) => onFailure && onFailure());
+      .catch((_err) => onFailure && onFailure());
   }
 
   return fetch(`${API_V1_WEATHER}?date_time=${date}T${time}`)
@@ -128,7 +128,7 @@ export const getWeather = (
       setResult(processWeather(result));
       onSuccess && onSuccess();
     })
-    .catch((err) => onFailure && onFailure());
+    .catch((_err) => onFailure && onFailure());
 };
 
 /**
