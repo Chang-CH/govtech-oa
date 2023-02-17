@@ -5,3 +5,5 @@ dist/
 *.d.ts
 *.md
 postcss.config.js
+jest.config.js
+config/

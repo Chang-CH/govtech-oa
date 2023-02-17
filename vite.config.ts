@@ -13,6 +13,7 @@ const commons = {
       _constants: path.resolve(__dirname, 'src/constants/'),
       _styles: path.resolve(__dirname, 'src/styles/'),
       _components: path.resolve(__dirname, 'src/components/'),
+      _pages: path.resolve(__dirname, 'src/pages/'),
     },
     extensions: ['.ts', '.tsx', '.js'],
   },

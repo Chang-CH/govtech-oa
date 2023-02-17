@@ -8,7 +8,7 @@ import global from '_styles/global.module.scss';
 import { Spin } from 'antd';
 
 /** Lazy import pages */
-const Traffic = React.lazy(() => import('./pages/traffic'));
+const Traffic = React.lazy(() => import('./pages/Traffic'));
 
 const rootElement = document.getElementById('root');
 

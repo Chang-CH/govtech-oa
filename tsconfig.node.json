@@ -9,6 +9,7 @@
       "_constants/*": [ "./src/constants/*"],
       "_styles/*": [ "./src/styles/*"],
       "_components/*": [ "./src/components/*"],
+      "_pages/*": [ "./src/pages/*"],
     }
   },
   "include": ["vite.config.ts"]

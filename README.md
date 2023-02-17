@@ -24,6 +24,10 @@ Submission for *Financial Planning Digital Service – Technical Take-Home Asses
 4. enter the `dist` directory: `cd dist`
 5. run serve: `serve -s`
 
+### Build production build
+
+1. run `pnpm test`
+
 ## Changes made
 
 ### Merge weather component with location list
