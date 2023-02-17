@@ -2,6 +2,8 @@
 
 Submission for *Financial Planning Digital Service – Technical Take-Home Assessment*, Govtech 2023
 
+![preview](preview.png)
+
 ## Setup guide
 
 ### Installation
