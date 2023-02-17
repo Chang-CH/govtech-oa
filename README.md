@@ -24,7 +24,7 @@ Submission for *Financial Planning Digital Service – Technical Take-Home Asses
 4. enter the `dist` directory: `cd dist`
 5. run serve: `serve -s`
 
-### Build production build
+### Testing
 
 1. run `pnpm test`
 
