@@ -1,6 +1,4 @@
-# Govtech Online Assessment submission: Chang Chuan Hao
-
-Submission for *Financial Planning Digital Service – Technical Take-Home Assessment*, Govtech 2023
+# Take Home Assessment
 
 ![preview](preview.png)
 
